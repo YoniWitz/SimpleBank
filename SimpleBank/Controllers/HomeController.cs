@@ -21,7 +21,7 @@ namespace SimpleBank.Controllers
         }
 
         [HttpPost]
-        public ActionResult Deposit(double depositAmount)
+        public ActionResult Deposit(decimal depositAmount)
         {
             return Content("you want to deposit: " + depositAmount);
         }
@@ -34,9 +34,9 @@ namespace SimpleBank.Controllers
         }
 
         [HttpPost]
-        public ActionResult Withdraw(double withdrawAmount)
+        public ActionResult Withdraw(decimal withdrawAmount)
         {
-            return Content("you want to withdraw: " + depositAmount);
+            return Content("you want to withdraw: " + withdrawAmount);
         }
     }
 }
