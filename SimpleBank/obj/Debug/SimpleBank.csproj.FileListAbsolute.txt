@@ -108,3 +108,4 @@ C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.csproj.Genera
 C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.Migrations.SimpleChange.resources
 C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.Migrations.NameChange.resources
 C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.Migrations.MajorChanges.resources
+C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.Migrations.removedName.resources
