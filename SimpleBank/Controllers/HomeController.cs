@@ -14,6 +14,9 @@ namespace SimpleBank.Controllers
             return View();
         }
 
-        
-    }
+        public ActionResult Foo()
+        {
+            return View("Index");
+        }
+   }
 }
