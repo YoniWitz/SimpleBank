@@ -16,26 +16,27 @@ namespace SimpleBank.Services.BankAccountServices
             this.db = db;
         }
 
-        public void UpdateBalance(decimal amount, string userId, string accountName)
+        public void UpdateBalance(Transaction transaction)
         {           
-            var bankAccount = db.BankAccounts.Where(c => c.ApplicationUserId.Equals(userId) && c.AccountName.Equals(accountName)).FirstOrDefault();
-            bankAccount.Balance += amount;
+            var bankAccount = db.BankAccounts.Where(c => c.ApplicationUserId.Equals(transaction.userId) && c.AccountName.Equals(transaction.accountName)).FirstOrDefault();
+            bankAccount.Balance += transaction.amount;
             db.SaveChanges();
         }
-        public string Withdraw(decimal amount, string userId, string accountName)
-        {
-            var bankAccount = db.BankAccounts.Where(c => c.ApplicationUserId == userId && c.AccountName == accountName).FirstOrDefault();
 
-            if (bankAccount.Balance - amount < 100)
+        public string Withdraw(Transaction transaction)
+        {
+            var bankAccount = db.BankAccounts.Where(c => c.ApplicationUserId == transaction.userId && c.AccountName == transaction.accountName).FirstOrDefault();
+
+            if (bankAccount.Balance - transaction.amount < 100)
             {
                 return "TooMuch";
             }
-            if ((amount / bankAccount.Balance) > 0.9M)
+            if ((transaction.amount / bankAccount.Balance) > 0.9M)
             {
                 return "insufficientFunds";
             }
 
-            bankAccount.Balance -= amount;
+            bankAccount.Balance -= transaction.amount;
             db.SaveChanges();
             return "";
         }

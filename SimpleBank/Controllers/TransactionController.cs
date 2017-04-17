@@ -13,30 +13,34 @@ namespace SimpleBank.Controllers
        
         public ActionResult Deposit(int id)
         {
+            var bankAccount = db.BankAccounts.Where(c => c.Id == id).FirstOrDefault();
             ViewBag.Message = "Hello There";
             ViewBag.TheMessage = "How much would you like to Deposit today";
-            ViewBag.Id = id;
-            return View();
+
+            Transaction transaction = new Transaction();
+            ViewBag.AccountName = bankAccount.AccountName;
+            ViewBag.UserId = User.Identity.GetUserId();
+
+            return View(transaction);
         }
 
         [HttpPost]
-        public ActionResult Deposit(decimal depositAmount, string accountName)
+        public ActionResult Deposit(Transaction transaction)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            if (depositAmount > 10000)
+            if (transaction.amount > 10000)
             {
                 ViewBag.TooMuch = "Can't deposit more 10,000$ at a time ";
                 return View();
             }
-
-            var userId = User.Identity.GetUserId();
+            
             var service = new BankAccountServices(db);
-            service.UpdateBalance(depositAmount, userId, accountName);
+            service.UpdateBalance(transaction);
 
-            return Content("you want to deposit: " + depositAmount);
+            return View("");
         }
 
         public ActionResult Withdraw(int id)
@@ -47,17 +51,16 @@ namespace SimpleBank.Controllers
         }
 
         [HttpPost]
-        public ActionResult Withdraw(decimal withdrawAmount, string accountName)
+        public ActionResult Withdraw(Transaction transaction)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var userId = User.Identity.GetUserId();
             
             var service = new BankAccountServices(db);
             
-            string result = service.Withdraw(withdrawAmount, userId, accountName);
+            string result = service.Withdraw(transaction);
             switch (result)
             {
                 case ("TooMuch"):
@@ -72,7 +75,6 @@ namespace SimpleBank.Controllers
                     }
                 default: { break; }
             }
-            
             return View("");
         }
     }
