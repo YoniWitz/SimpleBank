@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SimpleBank.Models.BankAccountModels>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountName)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountName)
+        </td>
+        
+        <td>
+            @Html.ActionLink("View", "Options", new { id=item.AccountName })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="row">
+    <div class="col-md-6 margin-top-20">
+        <a href="@Url.Action("Withdrawal", "Transaction", new { })" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-circle-arrow-down"></span> Withdrawal</a>
+        <a href="@Url.Action("Deposit", "Transaction", new { id = ViewBag.Id })" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-circle-arrow-up"></span> Deposit</a>
+    </div>
+    <div class="col-md-6 margin-top-20">
+        <a href="@Url.Action("Details", "BankAccount", new { id = ViewBag.Id })" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-question-sign"></span> Balance Inquiry</a>
+        <a href="@Url.Action("Delete", "BankAccount", new { id = ViewBag.Id })" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-trash"></span> Delete Account</a>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

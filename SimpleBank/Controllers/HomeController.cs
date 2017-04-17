@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace SimpleBank.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -13,30 +14,6 @@ namespace SimpleBank.Controllers
             return View();
         }
 
-        public ActionResult Deposit()
-        {
-            ViewBag.Message = "Hello There";
-            ViewBag.TheMessage = "How much would you like to Deposit today";
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Deposit(decimal depositAmount)
-        {
-            return Content("you want to deposit: " + depositAmount);
-        }
-
-        public ActionResult Withdraw()
-        {
-            ViewBag.Message = "Hello There";
-            ViewBag.TheMessage = "How much would you like to withdraw today";
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Withdraw(decimal withdrawAmount)
-        {
-            return Content("you want to withdraw: " + withdrawAmount);
-        }
+        
     }
 }

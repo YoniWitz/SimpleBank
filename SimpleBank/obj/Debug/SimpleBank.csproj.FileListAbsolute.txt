@@ -103,3 +103,8 @@ C:\Users\Yoni\workspace\SimpleBank\SimpleBank\bin\roslyn\System.Xml.XPath.dll
 C:\Users\Yoni\workspace\SimpleBank\SimpleBank\bin\roslyn\System.Xml.XPath.XDocument.dll
 C:\Users\Yoni\workspace\SimpleBank\SimpleBank\bin\roslyn\vbc.exe.config
 C:\Users\Yoni\workspace\SimpleBank\SimpleBank\bin\roslyn\vbc.rsp
+C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.Migrations.InitialCreate.resources
+C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.csproj.GenerateResource.Cache
+C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.Migrations.SimpleChange.resources
+C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.Migrations.NameChange.resources
+C:\Users\Yoni\workspace\SimpleBank\SimpleBank\obj\Debug\SimpleBank.Migrations.MajorChanges.resources
