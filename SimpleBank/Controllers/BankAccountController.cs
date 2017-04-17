@@ -17,7 +17,7 @@ namespace SimpleBank.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var bankAccounts = db.BankAccountModels.Where(c => c.ApplicationUserId == userId);
+            var bankAccounts = db.BankAccounts.Where(c => c.ApplicationUserId == userId);
                     
             return View(bankAccounts);
         }
@@ -25,7 +25,7 @@ namespace SimpleBank.Controllers
         // GET: BankAccount/Details
         public ActionResult Details(int id)
         {
-            BankAccountModels account = db.BankAccountModels.Where(a => a.Id == id).FirstOrDefault();
+            BankAccount account = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
             ViewBag.Id = id;
             if (account != null)
                 return View(account);
@@ -53,9 +53,9 @@ namespace SimpleBank.Controllers
             string accountName = Convert.ToString(collection["AccountName"]);
             var userId = User.Identity.GetUserId();
 
-            var account = db.BankAccountModels.Where(a => a.AccountName == accountName).FirstOrDefault();
+            var account = db.BankAccounts.Where(a => a.AccountName == accountName && a.ApplicationUserId.Equals(userId)).FirstOrDefault();
 
-            if (account != null && account.ApplicationUserId == userId)
+            if (account != null)
             {
                 //add error message
                 return View();
@@ -63,10 +63,8 @@ namespace SimpleBank.Controllers
 
             try
             {             
-                var name = User.Identity.GetUserName().Split(null);
-
-                var bankAccountModel = new BankAccountModels(accountName, name, userId);
-                db.BankAccountModels.Add(bankAccountModel);
+                var bankAccountModel = new BankAccount(accountName, userId);
+                db.BankAccounts.Add(bankAccountModel);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -80,7 +78,9 @@ namespace SimpleBank.Controllers
         // GET: BankAccount/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var account = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
+            ViewBag.Id = id;
+            return View(account);
         }
 
         // POST: BankAccount/Delete/5
@@ -89,10 +89,10 @@ namespace SimpleBank.Controllers
         {
             try
             {
-                var account = db.BankAccountModels.Where(a => a.Id == id).FirstOrDefault();
+                var account = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
                 if (account != null)
                 {
-                    db.BankAccountModels.Remove(account);
+                    db.BankAccounts.Remove(account);
                     db.SaveChanges();
                 }
 

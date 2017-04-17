@@ -1,4 +1,4 @@
-﻿@model SimpleBank.Models.BankAccountModels
+﻿@model SimpleBank.Models.BankAccount
 
 @{
     ViewBag.Title = "Details";
@@ -15,15 +15,6 @@
         <dd>
             @Html.DisplayFor(model => model.AccountName)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Balance)
         </dt>

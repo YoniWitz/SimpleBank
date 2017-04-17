@@ -30,6 +30,6 @@ namespace SimpleBank.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<BankAccountModels> BankAccountModels { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SimpleBank.Models.BankAccountModels>
+﻿@model IEnumerable<SimpleBank.Models.BankAccount>
 
 @{
     ViewBag.Title = "Index";
@@ -25,7 +25,7 @@
         </td>
         
         <td>
-            @Html.ActionLink("View", "Options", new { id=item.AccountName })
+            @Html.ActionLink("View", "Options", new { id=item.Id })
         </td>
     </tr>
 }
