@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Simple Bank</h1>
+    <p class="lead">Simple Bank is awesome.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Powered by ASP.NET</a></p>
+</div>
+@if (Request.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="">See and Manage your accounts</h2>
+            
+            <p>@Html.ActionLink("Accounts", "Index", "BankAccount", null, new { @class = "btn btn-default" })</p>
+        </div>
+        
+    </div>
+}
+else
+{
+<div class="row">
+    <div class="col-md-4">
+        <h2 class="">Regsiter</h2>
+        <p class="">
+            Open an account with us.
+        </p>
+        <p>@Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Log In</h2>
+        <p>Access your existing account.</p>
+        <p>@Html.ActionLink("Log in", "Login", "Account", null, new { @class = "btn btn-default" })</p>
+    </div>
+</div>
+}
