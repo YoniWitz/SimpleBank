@@ -39,7 +39,7 @@ namespace SimpleBank.Controllers
             if (transaction.amount > 10000)
             {
                 ViewBag.TooMuch = "Can't deposit more 10,000$ at a time ";
-                return View(transaction);
+                return View(transaction); 
             }
 
             var service = new BankAccountServices(db);

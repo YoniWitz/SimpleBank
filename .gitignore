@@ -47,3 +47,9 @@ Temporary Items
 .apdisk
 .vs/SimpleBank/v14/.suo
 SimpleBank/bin/SimpleBank.pdb
+
+#I want to add these
+.mdf
+git rm --cached bin/
+git rm --cached obj/
+*.dll
