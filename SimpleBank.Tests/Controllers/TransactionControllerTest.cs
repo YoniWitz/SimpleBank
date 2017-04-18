@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SimpleBank.Models;
 using SimpleBank.Controllers;
 using System.Web.Mvc;
@@ -25,7 +24,7 @@ namespace SimpleBank.Tests.Controllers
 
             fakeDb.BankAccounts.Add(bankAccount);
 
-            var transactionController = new TransactionController()
+            var transactionController = new TransactionController(fakeDb)
             {
                 GetUserId = () => "1"
             };
