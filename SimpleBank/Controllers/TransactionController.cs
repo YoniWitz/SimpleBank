@@ -16,13 +16,11 @@ namespace SimpleBank.Controllers
 
         public TransactionController()
         {
-            db = new ApplicationDbContext();
-            
+            db = new ApplicationDbContext();           
         }
 
         public TransactionController(IApplicationDbContext dbContext)
         {
-            GetUserId = () => User.Identity.GetUserId();
             db = dbContext;
         }
         public ActionResult Deposit(int id)

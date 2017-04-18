@@ -6,31 +6,16 @@ using System.Web.Mvc;
 namespace SimpleBank.Tests.Controllers
 {
     [TestClass]
-    public class UnitTest1
+    public class TransactionControllerTest
     {
         [TestMethod]
         public void CantDepositMoreThan10000()
         {
-            var fakeDb = new FakeApplicationDbContext();
-            fakeDb.BankAccounts = new FakeDbSet<BankAccount>();
+            var transaction = new Transaction() { amount = 10001 };
+            var transactionController = new TransactionController();
+            var result = transactionController.Deposit(transaction) as ViewResult;
 
-            var bankAccount = new BankAccount()
-            {
-                Id = 1,
-                AccountName = "new",
-                Balance = 0,
-                ApplicationUserId = "1"
-            };
-
-            fakeDb.BankAccounts.Add(bankAccount);
-
-            var transactionController = new TransactionController(fakeDb)
-            {
-                GetUserId = () => "1"
-            };
-            var result = transactionController.Deposit(1) as ViewResult;
-
-            Assert.AreEqual(1, result.ViewBag.Id);
+            Assert.IsNotNull(result.ViewBag.TooMuch);
         }
     }
 }
