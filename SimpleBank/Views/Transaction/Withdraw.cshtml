@@ -5,6 +5,11 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
+@if (ViewBag.Error != null)
+{
+    <h1>@ViewBag.Error</h1>
+}
+
 <h4>@ViewBag.TheMessage</h4>
 @using (Html.BeginForm())
 {
@@ -26,4 +31,9 @@
             <input type="submit" value="Withdraw" class="btn btn-default" />
         </div>
     </div>
+
+    <div>
+        @Html.ActionLink("Back to Options", "Options", "BankAccount", new { id = Model.id }, new { })
+    </div>
 }
+

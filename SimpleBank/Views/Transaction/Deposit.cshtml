@@ -3,9 +3,18 @@
     ViewBag.Title = "Deposit";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h3>Hello There</h3>
 
-<h4>@ViewBag.TheMessage</h4>
+@if (ViewBag.Error != null)
+{
+    <h1>@ViewBag.Error</h1>
+}
+
+@if (ViewBag.TooMuch != null)
+{
+    <h1>@ViewBag.TooMuch</h1>
+}
+<h4>How much would you like to Deposit today</h4>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -27,3 +36,7 @@
         </div>
     </div>
 }
+
+<div>
+    @Html.ActionLink("Back to Options", "Options", "BankAccount", new { id = Model.id }, new { })
+</div>

@@ -10,14 +10,18 @@ namespace SimpleBank.Controllers
     public class TransactionController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-       
+
         public ActionResult Deposit(int id)
         {
             var bankAccount = db.BankAccounts.Where(c => c.Id == id).FirstOrDefault();
-            ViewBag.Message = "Hello There";
-            ViewBag.TheMessage = "How much would you like to Deposit today";
+            if (bankAccount == null)
+            {
+                ViewBag.Error = "Account not found";
+                return View();
+            }
 
             Transaction transaction = new Transaction();
+            
             transaction.id = id;
             transaction.accountName = bankAccount.AccountName;
             transaction.userId = User.Identity.GetUserId();
@@ -35,23 +39,28 @@ namespace SimpleBank.Controllers
             if (transaction.amount > 10000)
             {
                 ViewBag.TooMuch = "Can't deposit more 10,000$ at a time ";
-                return View();
+                return View(transaction);
             }
-            
+
             var service = new BankAccountServices(db);
-            service.UpdateBalance(transaction);
+            service.Deposit(transaction);
 
             return RedirectToAction("Details", "BankAccount", new { id = transaction.id });
         }
 
         public ActionResult Withdraw(int id)
         {
+            var bankAccount = db.BankAccounts.Where(c => c.Id == id).FirstOrDefault();
+            if (bankAccount == null)
+            {
+                ViewBag.Error = "Account not found";
+                return View();
+            }
             ViewBag.Message = "Hello There";
             ViewBag.TheMessage = "How much would you like to withdraw today";
 
-            var bankAccount = db.BankAccounts.Where(c => c.Id == id).FirstOrDefault();
-
             Transaction transaction = new Transaction();
+            
             transaction.id = id;
             transaction.accountName = bankAccount.AccountName;
             transaction.userId = User.Identity.GetUserId();
@@ -66,21 +75,26 @@ namespace SimpleBank.Controllers
             {
                 return View();
             }
-            
+
             var service = new BankAccountServices(db);
-            
+
             string result = service.Withdraw(transaction);
             switch (result)
             {
-                case ("TooMuch"):
-                {
-                        ViewBag.TheMessage = "can't withdraw more than 90% in one time";
-                        return View();
-                }
                 case ("insufficientFunds"):
                     {
+                        ViewBag.TheMessage = "can't withdraw more than 90% in one time";
+                        return View(transaction);
+                    }
+                case ("TooMuch"):
+                    {
                         ViewBag.TheMessage = "can't have less than 100$ in account";
-                        return View();
+                        return View(transaction);
+                    }
+                case ("Not Found"):
+                    {
+                        ViewBag.TheMessage = "Coudlnt find entry";
+                        return RedirectToAction("Details", "BankAccount", new { id = transaction.id });
                     }
                 default: { break; }
             }

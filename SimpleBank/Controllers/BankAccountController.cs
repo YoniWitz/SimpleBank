@@ -53,11 +53,12 @@ namespace SimpleBank.Controllers
             string accountName = Convert.ToString(collection["AccountName"]);
             var userId = User.Identity.GetUserId();
 
+            //make sure the user doesnt have an account with same name
             var account = db.BankAccounts.Where(a => a.AccountName == accountName && a.ApplicationUserId.Equals(userId)).FirstOrDefault();
 
             if (account != null)
             {
-                //add error message
+                ViewBag.Error = "Can't use same name twice";
                 return View();
             }
 
@@ -79,8 +80,12 @@ namespace SimpleBank.Controllers
         public ActionResult Delete(int id)
         {
             var account = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
-            ViewBag.Id = id;
-            return View(account);
+            if (account != null)
+            {
+                ViewBag.Id = id;
+                return View(account);
+            }
+            return View("Options");
         }
 
         // POST: BankAccount/Delete/5
