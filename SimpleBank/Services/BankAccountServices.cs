@@ -9,11 +9,11 @@ namespace SimpleBank.Services.BankAccountServices
 {
      public class BankAccountServices
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IApplicationDbContext db;
 
-        public BankAccountServices(ApplicationDbContext db)
+        public BankAccountServices(IApplicationDbContext dbContext)
         {
-            this.db = db;
+            this.db = dbContext;
         }
 
         public void Deposit(Transaction transaction)
