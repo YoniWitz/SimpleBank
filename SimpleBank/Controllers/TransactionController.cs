@@ -18,8 +18,9 @@ namespace SimpleBank.Controllers
             ViewBag.TheMessage = "How much would you like to Deposit today";
 
             Transaction transaction = new Transaction();
-            ViewBag.AccountName = bankAccount.AccountName;
-            ViewBag.UserId = User.Identity.GetUserId();
+            transaction.id = id;
+            transaction.accountName = bankAccount.AccountName;
+            transaction.userId = User.Identity.GetUserId();
 
             return View(transaction);
         }
@@ -40,14 +41,22 @@ namespace SimpleBank.Controllers
             var service = new BankAccountServices(db);
             service.UpdateBalance(transaction);
 
-            return View("");
+            return RedirectToAction("Details", "BankAccount", new { id = transaction.id });
         }
 
         public ActionResult Withdraw(int id)
         {
             ViewBag.Message = "Hello There";
             ViewBag.TheMessage = "How much would you like to withdraw today";
-            return View();
+
+            var bankAccount = db.BankAccounts.Where(c => c.Id == id).FirstOrDefault();
+
+            Transaction transaction = new Transaction();
+            transaction.id = id;
+            transaction.accountName = bankAccount.AccountName;
+            transaction.userId = User.Identity.GetUserId();
+
+            return View(transaction);
         }
 
         [HttpPost]
@@ -75,7 +84,7 @@ namespace SimpleBank.Controllers
                     }
                 default: { break; }
             }
-            return View("");
+            return RedirectToAction("Details", "BankAccount", new { id = transaction.id });
         }
     }
 }
