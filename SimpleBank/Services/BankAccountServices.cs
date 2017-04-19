@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNet.Identity;
-using SimpleBank.Models;
-using System;
-using System.Collections.Generic;
+﻿using SimpleBank.Models;
 using System.Linq;
-using System.Web;
 
 namespace SimpleBank.Services.BankAccountServices
 {
-     public class BankAccountServices
+    public class BankAccountServices
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IApplicationDbContext db;
 
-        public BankAccountServices(ApplicationDbContext db)
+        public BankAccountServices(IApplicationDbContext dbContext)
         {
-            this.db = db;
+            this.db = dbContext;
         }
+        
 
         public void Deposit(Transaction transaction)
         {           

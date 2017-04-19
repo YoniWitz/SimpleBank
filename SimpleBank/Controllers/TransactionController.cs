@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Antlr.Runtime.Misc;
+using Microsoft.AspNet.Identity;
 using SimpleBank.Models;
 using SimpleBank.Services.BankAccountServices;
 using System.Linq;
@@ -9,8 +10,19 @@ namespace SimpleBank.Controllers
     [Authorize]
     public class TransactionController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        public Func<string> GetUserId; //For testing
+        
+        private IApplicationDbContext db;
 
+        public TransactionController()
+        {
+            db = new ApplicationDbContext();           
+        }
+
+        public TransactionController(IApplicationDbContext dbContext)
+        {
+            db = dbContext;
+        }
         public ActionResult Deposit(int id)
         {
             var bankAccount = db.BankAccounts.Where(c => c.Id == id).FirstOrDefault();

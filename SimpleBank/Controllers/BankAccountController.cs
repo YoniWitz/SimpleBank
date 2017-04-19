@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using SimpleBank.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SimpleBank.Controllers
@@ -11,7 +9,17 @@ namespace SimpleBank.Controllers
     [Authorize]
     public class BankAccountController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IApplicationDbContext db;
+
+        public BankAccountController()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        public BankAccountController(IApplicationDbContext dbContext)
+        {
+            db = dbContext;
+        }
 
         // GET: BankAccount
         public ActionResult Index()
@@ -79,7 +87,8 @@ namespace SimpleBank.Controllers
         // GET: BankAccount/Delete/5
         public ActionResult Delete(int id)
         {
-            var account = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
+            var userId = User.Identity.GetUserId();
+            var account = db.BankAccounts.Where(a => a.Id == id && a.ApplicationUserId.Equals(userId)).FirstOrDefault();
             if (account != null)
             {
                 ViewBag.Id = id;
@@ -101,7 +110,7 @@ namespace SimpleBank.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
+                return View("Index");
             }
             catch
             {
