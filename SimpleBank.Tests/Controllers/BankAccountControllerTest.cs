@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SimpleBank.Controllers;
 using System.Web.Mvc;
 using SimpleBank.Models;
