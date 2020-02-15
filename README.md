@@ -13,8 +13,8 @@ I wrote this web app as an assignment I received as part of a hiring process.
 This project covers a lot of different aspects of a Full Stack developer's responsibilites, including:
 
 ### Back End
-Deployment to Azure
-SQL Azure
+Deployment to Azure  
+SQL Azure  
 User Authentication  
 Registration and Login pages  
 
