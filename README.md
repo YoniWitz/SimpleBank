@@ -21,8 +21,8 @@ Registration and Login pages
 ##  Installation Instructions
 
 1. Download Repository
-2. Must configure 'connectionStrings' in Web.config
-2. In Microsoft Visual Studio (NOT VS code), choose 'Debug' from drop down list, then run 'IIS Express'
+2. (Might have to configure RSA permissions to decrypt web.config)
+3. In Microsoft Visual Studio (NOT VS code), choose 'Debug' from drop down list, then run 'IIS Express'
 
 ## Author
 
