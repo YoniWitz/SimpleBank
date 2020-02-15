@@ -6,10 +6,6 @@ ehthumbs.db
 Desktop.ini
 .vs
 
-# SQL Server files
-*.mdf
-*.ldf
-
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
