@@ -68,8 +68,8 @@ namespace SimpleBank.Controllers
                 ViewBag.Error = "Account not found";
                 return View();
             }
-            ViewBag.Message = "Hello There";
-            ViewBag.TheMessage = "How much would you like to withdraw today";
+          
+            ViewBag.TheMessage = "How much would you like to withdraw today?";
 
             Transaction transaction = new Transaction();
             

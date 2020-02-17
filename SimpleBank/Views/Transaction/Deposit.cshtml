@@ -1,9 +1,8 @@
 ﻿@model SimpleBank.Models.Transaction
 @{
-    ViewBag.Title = "Deposit";
+    ViewBag.Title = "Deposit Page";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>Hello There</h3>
+<h2>@ViewBag.Title</h2>
 
 @if (ViewBag.Error != null)
 {
@@ -14,7 +13,7 @@
 {
     <h1>@ViewBag.TooMuch</h1>
 }
-<h4>How much would you like to Deposit today</h4>
+<h4>How much would you like to deposit today?</h4>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -22,21 +21,23 @@
     @Html.HiddenFor(model => model.accountName)
     @Html.HiddenFor(model => model.id)
     @Html.HiddenFor(model => model.userId)
-    <div class="form-group">
-        @Html.LabelFor(model => model.amount, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
-        </div>
-        
+<div class="form-group">
+    @Html.LabelFor(model => model.amount, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Deposit" class="btn btn-default" />
-        </div>
+    <hr />
+</div>
+<div class="form-group">
+    <hr />
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Deposit" class="btn btn-default" />
     </div>
+</div>
 }
 
 <div>
+    <hr />
     @Html.ActionLink("Back to Options", "Options", "BankAccount", new { id = Model.id }, new { })
 </div>

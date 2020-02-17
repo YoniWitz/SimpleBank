@@ -1,16 +1,16 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Your accounts";
 }
 
 <div class="jumbotron">
-    <h1>Simple Bank</h1>
+    <h1>Main Page</h1>
     <p class="lead">Simple Bank is awesome.</p>
 </div>
 @if (Request.IsAuthenticated)
 {
     <div class="row">
-        <div class="col-md-4">
-            <h2 class="">See and Manage your accounts</h2>
+        <div class="col-md-5">
+            <h2 class="">View and manage your accounts</h2>
             
             <p>@Html.ActionLink("Accounts", "Index", "BankAccount", null, new { @class = "btn btn-default" })</p>
         </div>
