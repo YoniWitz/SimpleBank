@@ -33,10 +33,10 @@ namespace SimpleBank.Controllers
         // GET: BankAccount/Details
         public ActionResult Details(int id)
         {
-            BankAccount account = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
+            BankAccount bankAccount = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
             ViewBag.Id = id;
-            if (account != null)
-                return View(account);
+            if (bankAccount != null)
+                return View(bankAccount);
             else
                 return View("Index");             
         }
@@ -58,13 +58,13 @@ namespace SimpleBank.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            string accountName = Convert.ToString(collection["AccountName"]);
+            string bankAccountName = Convert.ToString(collection["AccountName"]);
             var userId = User.Identity.GetUserId();
 
-            //make sure the user doesnt have an account with same name
-            var account = db.BankAccounts.Where(a => a.AccountName == accountName && a.ApplicationUserId.Equals(userId)).FirstOrDefault();
+            //make sure the user doesnt have an bank account with same name
+            var bankAccount = db.BankAccounts.Where(a => a.AccountName == bankAccountName && a.ApplicationUserId.Equals(userId)).FirstOrDefault();
 
-            if (account != null)
+            if (bankAccount != null)
             {
                 ViewBag.Error = "Can't use same name twice";
                 return View();
@@ -72,7 +72,7 @@ namespace SimpleBank.Controllers
 
             try
             {             
-                var bankAccountModel = new BankAccount(accountName, userId);
+                var bankAccountModel = new BankAccount(bankAccountName, userId);
                 db.BankAccounts.Add(bankAccountModel);
                 db.SaveChanges();
 
@@ -88,11 +88,11 @@ namespace SimpleBank.Controllers
         public ActionResult Delete(int id)
         {
             var userId = User.Identity.GetUserId();
-            var account = db.BankAccounts.Where(a => a.Id == id && a.ApplicationUserId.Equals(userId)).FirstOrDefault();
-            if (account != null)
+            var bankAccount = db.BankAccounts.Where(a => a.Id == id && a.ApplicationUserId.Equals(userId)).FirstOrDefault();
+            if (bankAccount != null)
             {
                 ViewBag.Id = id;
-                return View(account);
+                return View(bankAccount);
             }
             return View("Options");
         }
@@ -101,16 +101,18 @@ namespace SimpleBank.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            var userId = User.Identity.GetUserId();
             try
             {
-                var account = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
-                if (account != null)
+                var bankAccount = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
+                if (bankAccount != null)
                 {
-                    db.BankAccounts.Remove(account);
+                    db.BankAccounts.Remove(bankAccount);
                     db.SaveChanges();
                 }
+                var bankAccounts = db.BankAccounts.Where(c => c.ApplicationUserId == userId);
 
-                return View("Index");
+                return View("Index", bankAccounts);
             }
             catch
             {
