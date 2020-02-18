@@ -1,12 +1,12 @@
 ﻿@model SimpleBank.Models.BankAccount
 
 @{
-    ViewBag.Title = "Delete Account Page";
+    ViewBag.Title = "Delete Account";
 }
 
-<h2>Delete Account</h2>
+<h2>@ViewBag.Title Page</h2>
 
-<h3>Are you sure you want to delete this? You will lose your balance!!!</h3>
+<h3>Are you sure you want to delete @Model.AccountName? You will lose your balance!!!</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
