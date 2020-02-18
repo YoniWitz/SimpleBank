@@ -356,7 +356,7 @@ namespace SimpleBank.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("Index", "ManageBankAccount");
             }
 
             if (ModelState.IsValid)

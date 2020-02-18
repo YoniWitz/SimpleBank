@@ -20,6 +20,17 @@ namespace SimpleBank.Models
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 
+    public class UserDeleteViewModel
+    { 
+        [Display(Name = "Email address")]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+    }
+
     public class FactorViewModel
     {
         public string Purpose { get; set; }

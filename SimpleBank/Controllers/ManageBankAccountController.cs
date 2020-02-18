@@ -10,16 +10,16 @@ using SimpleBank.Models;
 namespace SimpleBank.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageBankAccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController()
+        public ManageBankAccountController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageBankAccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,7 +36,7 @@ namespace SimpleBank.Controllers
                 _signInManager = value; 
             }
         }
-
+        
         public ApplicationUserManager UserManager
         {
             get
@@ -49,9 +49,48 @@ namespace SimpleBank.Controllers
             }
         }
 
-       
         //
-        // GET: /Manage/Index
+        // GET: ManageBankAccount/DeleteUser
+        public  ActionResult DeleteUser()
+        {
+            return View();
+        }
+        //
+        // POST: /ManageBankAccount/DeleteUser
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteUser(UserDeleteViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var confirmationResult = await SignInManager.PasswordSignInAsync(model.Email, model.Password, false, shouldLockout: false);
+               
+            switch (confirmationResult)
+            {
+                case SignInStatus.Success:
+                    {
+                        try
+                        {
+                            await UserManager.DeleteAsync(await UserManager.FindByIdAsync(User.Identity.GetUserId()));
+
+                            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        catch
+                        {
+                            ModelState.AddModelError("", "Invalid delete attempt.");
+                            return View(model);
+                        }
+                    }              
+                default:
+                    ModelState.AddModelError("", "Invalid delete attempt.");
+                    return View(model);
+            }
+        }
+        //
+        // GET: /ManageBankAccount/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -64,6 +103,7 @@ namespace SimpleBank.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            ViewBag.Id = userId;
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -76,7 +116,7 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // POST: /Manage/RemoveLogin
+        // POST: /ManageBankAccount/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
@@ -100,14 +140,14 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // GET: /Manage/AddPhoneNumber
+        // GET: /ManageBankAccount/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
 
         //
-        // POST: /Manage/AddPhoneNumber
+        // POST: /ManageBankAccount/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
@@ -131,7 +171,7 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // POST: /Manage/EnableTwoFactorAuthentication
+        // POST: /ManageBankAccount/EnableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnableTwoFactorAuthentication()
@@ -142,11 +182,11 @@ namespace SimpleBank.Controllers
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("Index", "Manage");
+            return RedirectToAction("Index", "ManageBankAccount");
         }
 
         //
-        // POST: /Manage/DisableTwoFactorAuthentication
+        // POST: /ManageBankAccount/DisableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisableTwoFactorAuthentication()
@@ -157,11 +197,11 @@ namespace SimpleBank.Controllers
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("Index", "Manage");
+            return RedirectToAction("Index", "ManageBankAccount");
         }
 
         //
-        // GET: /Manage/VerifyPhoneNumber
+        // GET: /ManageBankAccount/VerifyPhoneNumber
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
@@ -170,7 +210,7 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // POST: /Manage/VerifyPhoneNumber
+        // POST: /ManageBankAccount/VerifyPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
@@ -195,7 +235,7 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // POST: /Manage/RemovePhoneNumber
+        // POST: /ManageBankAccount/RemovePhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemovePhoneNumber()
@@ -214,14 +254,15 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // GET: /Manage/ChangePassword
+        // GET: /ManageBankAccount/ChangePassword
         public ActionResult ChangePassword()
         {
             return View();
         }
 
+
         //
-        // POST: /Manage/ChangePassword
+        // POST: /ManageBankAccount/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
@@ -245,14 +286,14 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // GET: /Manage/SetPassword
+        // GET: /ManageBankAccount/SetPassword
         public ActionResult SetPassword()
         {
             return View();
         }
 
         //
-        // POST: /Manage/SetPassword
+        // POST: /ManageBankAccount/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
@@ -277,7 +318,7 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // GET: /Manage/ManageLogins
+        // GET: /ManageBankAccount/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -300,17 +341,17 @@ namespace SimpleBank.Controllers
         }
 
         //
-        // POST: /Manage/LinkLogin
+        // POST: /ManageBankAccount/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
         {
             // Request a redirect to the external login provider to link a login for the current user
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
+            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "ManageBankAccount"), User.Identity.GetUserId());
         }
 
         //
-        // GET: /Manage/LinkLoginCallback
+        // GET: /ManageBankAccount/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
