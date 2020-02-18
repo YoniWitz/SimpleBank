@@ -44,6 +44,8 @@ namespace SimpleBank.Controllers
         // GET: BankAccount/Details
         public ActionResult Options(int id)
         {
+            BankAccount bankAccount = db.BankAccounts.Where(a => a.Id == id).FirstOrDefault();
+            ViewBag.Name = bankAccount.AccountName;
             ViewBag.Id = id;
             return View();
         }

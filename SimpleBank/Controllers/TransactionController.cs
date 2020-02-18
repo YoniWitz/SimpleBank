@@ -69,7 +69,7 @@ namespace SimpleBank.Controllers
                 return View();
             }
           
-            ViewBag.TheMessage = "How much would you like to withdraw today?";
+            ViewBag.TheMessage = "How much would you like to withdraw today from " + bankAccount.AccountName + " today?";
 
             Transaction transaction = new Transaction();
             
