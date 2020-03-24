@@ -2,7 +2,7 @@
 
 Allows user to register and log in to their bank account. The user could then manage their sub accounts (create and delete sub accounts, deposit and withdraw money, view balance). Written in ASP.Net Web Application MVC. Uses C#, SQL Azure, EntityFramework and cshtml
 
-## You can use it [here](https://ywsimplebank.azurewebsites.net/)
+
 
 <image src="assets/simple_bank_snapshot.png">
 
